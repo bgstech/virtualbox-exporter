@@ -6,13 +6,14 @@ Export multiple VirtualBox virtual machines into separate OVF archive files
 VirtualBox itself is queried for the list of available VMs and so by default
 every VM will be exported in turn.
 
-Use the 'exclude' array (in the script) if you want to exlude some of the
-virtual machines.
+Run without arguments to export every available virtual machine in turn.  You
+can use either optional exclude mechanism (or both!) by uncommenting the
+approrpate block in the script.  "Exclude Block #1" will skip any virtual
+machine if a file sharing that name (with a .ova extension) already exists.
+"Exclude Block #2" will exclude any virtual machines listed in the exclude.list
+file in the current workding directory.  See the comments in that file for
+example entries.
 
-After each VM/appliance is exported, an MD5 hash is computed for convenience.
-Capture the script output to preserve those hashes, e.g.
-
-```./vbox-export-all.sh 2>&1 | tee export.log```
-
-
+After each VM/appliance is exported, an MD5 hash is computed for convenience,
+and written to a 'checksum.txt' file.
 

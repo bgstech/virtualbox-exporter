@@ -7,28 +7,50 @@
 # variable below if you want to exlude some of the virtual machines.
 #
 # After each VM/appliance is exported, an MD5 hash is computed for convenience.
-# Capture the script output to preserve those hashes, e.g.
+# The hash is displayed on the console as well as appended to a 'checksum.txt'
+# file in the current directory (this file is created if necessary)
 #
-#    ./vbox-export-all.sh 2>&1 | tee export.log
-#
-# Version: 1.0
+# Uncomment "Exclude Block #1" to automatically exclude virtual machines for
+# which a filename of the same name already exists.
+# Uncomment "Exclude Block #2" to also exclude named virtual machines listed
+# one per line in a separate 'exclude.list' file.  You can elect to use neither,
+# one, or both of these exclude blocks. 
 #
 # Requires:
 #	VirtualBox's 'vboxmanage' command
 #	md5sum (Linux) or md5 (OS X) command
 #
+# Version: 1.0
+#
 # Brian Sheehan
-# Jun 3rd 2015
+# June 3 2015
 # bgstech.com
 
 
 # Only newlines are field separators 
 IFS=$'\n'
 
-# List of machines to exclude from the process.  Each one should be in
-# double-quotes. Leave this line commented out if you want every virtual
-# machine exported.
-#declare -a exclude=("CentOS 3.7 x86_64" "FreeBSD 7.1 i386")
+# Initialize an empty exclude list array
+declare -a exclude
+
+## -- Exclude Block #1 BEGIN --
+## Use this for loop to exclude any virtual machines for which an exported
+## archive file already exists in the current directory
+#for e in $(ls -1 | grep '\.ova$' | sed 's/\.ova$//'); do
+#  exclude[${#exclude[*]}]="$e"
+#done
+## -- Exclude Block #1 END --
+
+## -- Exclude Block #2 BEGIN --
+## Use this block to omit any virtual machines listed (one per line) in
+## a separate 'exclude.list' file which should reside in the current
+## working directory
+#if [ -f exclude.list ]; then
+#  for e in $(grep -v '^#' exclude.list | grep -v '^\s*$' | sed 's/\.ova$//'); do
+#    exclude[${#exclude[*]}]="$e"
+#  done
+#fi
+## -- Exclude Block #2 END --
 
 # Loop over each available virtual machine
 for m in $(vboxmanage list vms); do
@@ -57,9 +79,9 @@ for m in $(vboxmanage list vms); do
     # try to use 'md5 -r' first (OS X) and if that fails use 'md5sum'.  Comment
     # this block out if you need to save some time.
     if [ "$(which md5)" == "" ]; then
-       md5sum "$mach.ova"
+       md5sum "$mach.ova" >> checksum.txt
     else
-       md5 -r "$mach.ova"
+       md5 -r "$mach.ova" >> checksum.txt
     fi
     echo ""
 done
