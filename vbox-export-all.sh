@@ -59,7 +59,7 @@ for m in $(vboxmanage list vms); do
     if [ "$(which md5)" == "" ]; then
        md5sum "$mach.ova"
     else
-       md -r "$mach.ova"
+       md5 -r "$mach.ova"
     fi
     echo ""
 done
