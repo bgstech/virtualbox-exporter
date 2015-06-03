@@ -45,11 +45,11 @@ declare -a exclude
 ## Use this block to omit any virtual machines listed (one per line) in
 ## a separate 'exclude.list' file which should reside in the current
 ## working directory
-#if [ -f exclude.list ]; then
-#  for e in $(grep -v '^#' exclude.list | grep -v '^\s*$' | sed 's/\.ova$//'); do
-#    exclude[${#exclude[*]}]="$e"
-#  done
-#fi
+if [ -f exclude.list ]; then
+  for e in $(grep -v '^#' exclude.list | grep -v '^\s*$' | sed 's/\.ova$//'); do
+    exclude[${#exclude[*]}]="$e"
+  done
+fi
 ## -- Exclude Block #2 END --
 
 # Loop over each available virtual machine

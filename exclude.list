@@ -3,9 +3,8 @@
 # List virtual machines by name (one per line) which should NOT be exported.
 # Comments (such as these lines) and blank lines are ignored.
 
-#CentOS 3.7 x86_64
+CentOS 3.7 x86_64
 CentOS 5.6 x86_64
-CentOS 5.8 x86_64
 
 FreeBSD 7.1 i386
 
