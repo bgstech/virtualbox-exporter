@@ -56,11 +56,11 @@ for m in $(vboxmanage list vms); do
     # Provide an MD5 checksum of the output file for later comparison.  We
     # try to use 'md5 -r' first (OS X) and if that fails use 'md5sum'.  Comment
     # this block out if you need to save some time.
-    md5_cmd='md5 -r'
     if [ "$(which md5)" == "" ]; then
-        md5_cmd=md5sum
+       md5sum "$mach.ova"
+    else
+       md -r "$mach.ova"
     fi
-    $md5_cmd "$mach.ova"
     echo ""
 done
 
