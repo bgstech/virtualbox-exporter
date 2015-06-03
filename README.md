@@ -8,9 +8,12 @@ every VM will be exported in turn.
 
 Run without arguments to export every available virtual machine in turn.  You
 can use either optional exclude mechanism (or both!) by uncommenting the
-approrpate block in the script.  "Exclude Block #1" will skip any virtual
-machine if a file sharing that name (with a .ova extension) already exists.
-"Exclude Block #2" will exclude any virtual machines listed in the exclude.list
+approrpate block in the script:
+
+* "Exclude Block #1" will skip any virtual machine if a file sharing that name
+(with a .ova extension) already exists.
+
+* "Exclude Block #2" will exclude any virtual machines listed in the exclude.list
 file in the current workding directory.  See the comments in that file for
 example entries.
 
